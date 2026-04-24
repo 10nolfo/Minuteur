@@ -170,54 +170,164 @@
     .session-name-input:focus { border-color: var(--accent); }
     .session-name-input::placeholder { color: var(--muted); }
 
-    /* ─── SETUP: EXERCISES ─── */
-    .ex-hint-row {
-      display: flex; gap: 6px;
-      padding-right: 44px;
-      margin-bottom: 5px;
+    /* ─── SECTION LABEL ─── */
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+      margin-top: 4px;
     }
-    .ex-hint {
-      font-size: 9px; color: var(--muted);
-      letter-spacing: 1.5px; text-transform: uppercase;
-    }
-    .ex-hint.name { flex: 3; }
-    .ex-hint.sets { flex: 1; text-align: center; }
-    .ex-hint.weight { flex: 2; }
 
+    /* ─── EXERCISE ENTRY — nouvelle version compacte ─── */
     .exercise-entry {
-      display: flex; gap: 7px; margin-bottom: 8px; align-items: stretch;
-    }
-    .ex-fields { flex: 1; display: flex; flex-direction: column; }
-    .ex-row { display: flex; gap: 6px; }
-    .ex-input {
       background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 13px;
+      padding: 11px 12px;
+      margin-bottom: 8px;
+      position: relative;
+    }
+
+    /* Ligne 1 : Exercice + bouton supprimer */
+    .ex-line1 {
+      display: flex;
+      gap: 7px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    /* Ligne 2 : Séries | Poids | RPE | Repos */
+    .ex-line2 {
+      display: flex;
+      gap: 6px;
+      align-items: stretch;
+    }
+
+    /* ─── SELECT CUSTOM ─── */
+    .ex-select-wrap {
+      position: relative;
+      flex: 1;
+    }
+    .ex-select-wrap::after {
+      content: '▾';
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 11px;
+      pointer-events: none;
+    }
+
+    /* Le select Exercice prend toute la ligne 1 */
+    .ex-select-wrap.full {
+      flex: 1;
+    }
+
+    .ex-select {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border2);
+      border-radius: 9px;
+      color: var(--text);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      padding: 9px 28px 9px 10px;
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+      transition: border-color .15s;
+      cursor: pointer;
+    }
+    .ex-select:focus { border-color: var(--accent); }
+    .ex-select option { background: #1a1a1a; color: var(--text); }
+
+    /* Input texte pour "Autre" */
+    .ex-input-custom {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--accent-dim);
+      border-radius: 9px;
+      color: var(--text);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 9px 10px;
+      outline: none;
+      -webkit-appearance: none;
+      transition: border-color .15s;
+      display: none;
+    }
+    .ex-input-custom.show { display: block; }
+    .ex-input-custom:focus { border-color: var(--accent); }
+    .ex-input-custom::placeholder { color: var(--muted); }
+
+    /* Labels au-dessus des petits selects */
+    .ex-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+    .ex-col-label {
+      font-size: 8px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .ex-col .ex-select-wrap { width: 100%; }
+
+    /* Séries */
+    .ex-col.sets { flex: 0 0 52px; }
+    /* Poids */
+    .ex-col.weight { flex: 1; }
+    /* RPE */
+    .ex-col.rpe { flex: 0 0 56px; }
+    /* Temps repos */
+    .ex-col.rest-min { flex: 0 0 52px; }
+    .ex-col.rest-sec { flex: 0 0 56px; }
+
+    /* Input poids — saisie libre */
+    .ex-input-weight {
+      width: 100%;
+      background: var(--bg);
       border: 1px solid var(--border2);
       border-radius: 9px;
       color: var(--text);
       font-family: 'DM Mono', monospace;
       font-size: 13px;
-      padding: 10px 10px;
+      padding: 9px 8px;
       outline: none;
-      transition: border-color .15s;
       -webkit-appearance: none;
-      min-width: 0;
+      text-align: center;
+      transition: border-color .15s;
     }
-    .ex-input:focus { border-color: var(--accent); }
-    .ex-input.name { flex: 3; }
-    .ex-input.sets { flex: 1; text-align: center; }
-    .ex-input.weight { flex: 2; }
-    .ex-input::placeholder { color: var(--muted); }
+    .ex-input-weight:focus { border-color: var(--accent); }
+    .ex-input-weight::placeholder { color: var(--muted); font-size: 11px; }
+
+    /* Séparateur ":" entre min et sec */
+    .rest-sep {
+      align-self: flex-end;
+      padding-bottom: 9px;
+      font-size: 16px;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+    }
 
     .btn-remove {
       background: none;
       border: 1px solid var(--border2);
       border-radius: 9px;
       color: var(--muted);
-      font-size: 22px; font-weight: 300;
-      width: 36px; min-width: 36px;
+      font-size: 20px; font-weight: 300;
+      width: 34px; min-width: 34px; height: 34px;
       cursor: pointer;
       display: flex; align-items: center; justify-content: center;
-      align-self: stretch;
+      flex-shrink: 0;
       transition: all .15s;
     }
     .btn-remove:active { color: var(--accent); border-color: var(--accent); }
@@ -238,7 +348,7 @@
     }
     .btn-add-ex:active { color: var(--accent); border-color: var(--accent); }
 
-    /* ─── SETUP: REST ─── */
+    /* ─── SETUP: REST (global fallback) ─── */
     .rest-presets {
       display: flex; gap: 8px;
     }
@@ -410,7 +520,6 @@
       margin-bottom: 8px;
     }
 
-    /* SVG ring + display */
     .timer-center {
       position: relative;
       width: 164px; height: 164px;
@@ -422,17 +531,12 @@
       width: 164px; height: 164px;
       transform: rotate(-90deg);
     }
-    .timer-ring .track {
-      fill: none;
-      stroke: var(--border2);
-      stroke-width: 6;
-    }
+    .timer-ring .track { fill: none; stroke: var(--border2); stroke-width: 6; }
     .timer-ring .progress {
       fill: none;
       stroke: var(--accent);
       stroke-width: 6;
       stroke-linecap: round;
-      /* C = 2π × 75 ≈ 471 */
       stroke-dasharray: 471;
       stroke-dashoffset: 471;
       transition: stroke-dashoffset .6s linear, stroke .3s;
@@ -701,14 +805,98 @@
       box-shadow: 0 4px 24px rgba(224,21,21,0.3);
     }
 
-    .section-label {
-      font-size: 10px;
-      letter-spacing: 2.5px;
+    /* ─── EXERCISE CHANGE OVERLAY ─── */
+    .exercise-change-overlay {
+      position: fixed; inset: 0;
+      background: rgba(8,8,8,0.96);
+      z-index: 150;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 36px 28px;
+      text-align: center;
+    }
+    .exercise-change-overlay.show { display: flex; }
+
+    .exchange-from {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--muted);
-      margin-bottom: 8px;
-      margin-top: 4px;
+      margin-bottom: 4px;
     }
+    .exchange-from-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 38px;
+      letter-spacing: 4px;
+      color: var(--done-text);
+      line-height: 1;
+      margin-bottom: 6px;
+      text-shadow: 0 0 28px rgba(76,202,80,0.3);
+    }
+    .exchange-done-badge {
+      display: inline-block;
+      background: var(--done-bg);
+      border: 1px solid var(--done-border);
+      color: var(--done-text);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      padding: 4px 14px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      margin-bottom: 36px;
+    }
+    .exchange-arrow {
+      font-size: 28px;
+      color: var(--accent);
+      margin-bottom: 20px;
+      animation: pulse-arrow 1s ease-in-out infinite;
+    }
+    @keyframes pulse-arrow {
+      0%, 100% { transform: translateY(0); opacity: 1; }
+      50% { transform: translateY(4px); opacity: 0.6; }
+    }
+    .exchange-to-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .exchange-to-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 52px;
+      letter-spacing: 5px;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 8px;
+      text-shadow: 0 0 40px rgba(224,21,21,0.4);
+    }
+    .exchange-to-info {
+      font-size: 14px;
+      color: var(--text-dim);
+      letter-spacing: 0.5px;
+      margin-bottom: 44px;
+    }
+    .btn-exchange-go {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 15px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 3px;
+      padding: 16px 52px;
+      cursor: pointer;
+      box-shadow: 0 4px 24px rgba(224,21,21,0.3);
+      transition: all .15s;
+    }
+    .btn-exchange-go:active { transform: scale(0.97); box-shadow: none; }
   </style>
 </head>
 <body>
@@ -739,17 +927,12 @@
                placeholder="Ex : Squat / Bench / Deadlift" maxlength="40" />
 
         <div class="section-label">Exercices</div>
-        <div class="ex-hint-row">
-          <div class="ex-hint name">Exercice</div>
-          <div class="ex-hint sets">Séries</div>
-          <div class="ex-hint weight">Poids (kg)</div>
-        </div>
         <div id="exercise-list"></div>
         <button class="btn-add-ex" id="btn-add-ex">＋ Ajouter un exercice</button>
       </div>
 
       <div class="card">
-        <div class="card-label">Temps de repos entre chaque série</div>
+        <div class="card-label">Temps de repos global (par défaut)</div>
         <div class="rest-presets" id="rest-presets">
           <div class="rest-preset" data-val="90">1:30<span>Hypertrophie</span></div>
           <div class="rest-preset selected" data-val="180">3:00<span>Force</span></div>
@@ -784,7 +967,6 @@
     <div class="timer-block" id="timer-block">
       <div class="timer-status" id="timer-status">PRÊT</div>
       <div class="timer-center">
-        <!-- C = 2π × 75 = 471.24 → 471 -->
         <svg class="timer-ring" viewBox="0 0 164 164">
           <circle class="track"    cx="82" cy="82" r="75"/>
           <circle class="progress" id="timer-circle" cx="82" cy="82" r="75"/>
@@ -811,6 +993,18 @@
   <!-- TOAST -->
   <div class="toast" id="toast"></div>
 
+  <!-- EXERCISE CHANGE OVERLAY -->
+  <div class="exercise-change-overlay" id="overlay-exchange">
+    <div class="exchange-from" id="exch-from-label">TERMINÉ</div>
+    <div class="exchange-from-name" id="exch-from-name">SQUAT</div>
+    <div class="exchange-done-badge">✓ Toutes les séries bouclées</div>
+    <div class="exchange-arrow">↓</div>
+    <div class="exchange-to-label">ON PASSE À</div>
+    <div class="exchange-to-name" id="exch-to-name">BENCH</div>
+    <div class="exchange-to-info" id="exch-to-info">4 séries · 100 kg</div>
+    <button class="btn-exchange-go" id="btn-exchange-go">C'EST PARTI !</button>
+  </div>
+
   <!-- COMPLETED OVERLAY -->
   <div class="overlay" id="overlay-done">
     <div class="overlay-icon">💪</div>
@@ -823,8 +1017,6 @@
 <script>
 // ═══════════════════════════════════════════════
 //  WEB WORKER (inline blob)
-//  Ticks toutes les 250ms même si l'onglet est
-//  throttlé (fonctionne sur Android/Desktop)
 // ═══════════════════════════════════════════════
 const WORKER_SRC = `
   let iv = null;
@@ -871,14 +1063,6 @@ function unlockAudio() {
   } catch(e) {}
 }
 
-/**
- * Joue une tonalité synthétique
- * @param {number} freq - fréquence Hz
- * @param {number} t0   - ctx.currentTime de départ
- * @param {number} dur  - durée en secondes
- * @param {number} vol  - volume 0..1
- * @param {string} type - 'sine' | 'square'
- */
 function playTone(freq, t0, dur, vol = 0.5, type = 'sine') {
   try {
     const ctx = getCtx();
@@ -895,18 +1079,22 @@ function playTone(freq, t0, dur, vol = 0.5, type = 'sine') {
   } catch(e) {}
 }
 
-// Alarme de fin — 4 paires haute/basse ≈ 2.4 secondes
 function playEndSound() {
   try {
     const t = getCtx().currentTime;
-    for (let i = 0; i < 4; i++) {
-      playTone(1050, t + i * 0.55,        0.22, 0.75, 'square');
-      playTone(700,  t + i * 0.55 + 0.25, 0.22, 0.55, 'square');
-    }
+    playTone(440, t,        0.18, 0.55);
+    playTone(660, t + 0.22, 0.18, 0.55);
+    playTone(880, t + 0.44, 0.36, 0.65);
   } catch(e) {}
 }
 
-// Double bip court — série validée
+function playTickSound() {
+  try {
+    const t = getCtx().currentTime;
+    playTone(660, t, 0.07, 0.22, 'square');
+  } catch(e) {}
+}
+
 function playSetDoneSound() {
   try {
     const t = getCtx().currentTime;
@@ -927,21 +1115,7 @@ async function askNotifPerm() {
 
 function pushNotif(title, body) {
   if (!('Notification' in window) || Notification.permission !== 'granted') return;
-  // registration.showNotification() fonctionne même quand l'onglet est en arrière-plan
-  // contrairement à new Notification() qui nécessite que la page soit active
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.ready
-      .then(reg => reg.showNotification(title, {
-        body,
-        tag: 'defcon-timer',
-        renotify: true,
-        requireInteraction: true,   // reste visible jusqu'au tap
-        vibrate: [200, 100, 200, 100, 400]
-      }))
-      .catch(() => { try { new Notification(title, { body }); } catch(e) {} });
-  } else {
-    try { new Notification(title, { body }); } catch(e) {}
-  }
+  try { new Notification(title, { body, tag: 'defcon', renotify: true, silent: false }); } catch(e) {}
 }
 
 function refreshNotifBar() {
@@ -954,20 +1128,30 @@ function refreshNotifBar() {
 }
 
 // ═══════════════════════════════════════════════
+//  EXERCISE PRESETS
+// ═══════════════════════════════════════════════
+const EXERCISE_PRESETS = ['Squat', 'Bench', 'Deadlift', 'Overhead Press', 'Rowing Barre', 'Romanian Deadlift', 'Leg Press', 'Développé Incliné', 'Curl Barre', 'Dips', 'Autre…'];
+const SETS_OPTIONS   = [1,2,3,4,5,6,7,8,9,10];
+const RPE_OPTIONS    = [4,4.5,5,5.5,6,6.5,7,7.5,8,8.5,9,9.5,10];
+const REST_MIN_OPTS  = [0,1,2,3,4,5,6,7,8,9,10];
+const REST_SEC_OPTS  = [0,15,30,45];
+
+// ═══════════════════════════════════════════════
 //  STATE
 // ═══════════════════════════════════════════════
 let exercises   = [];
-let restSeconds = 180;
+let restSeconds = 180; // global fallback
 let sessionName = '';
 
 let sessionActive = false;
-let flatSeries    = [];   // [{exIndex, setIndex, name, weight, totalSets}]
+let flatSeries    = [];   // [{exIndex, setIndex, name, weight, rpe, restSec, totalSets}]
 let currentIdx    = 0;
-let timerPhase    = 'idle'; // 'idle' | 'rest'
-let timerEndTime  = null;   // Date.now() + ms
-let timerTotal    = 0;      // initial rest in seconds
-let fallbackIv    = null;   // setInterval backup
-let lastShownSec  = -1;     // pour éviter les beeps en double
+let timerPhase    = 'idle';
+let timerEndTime  = null;
+let timerTotal    = 0;
+let fallbackIv    = null;
+let lastShownSec  = -1;
+let pendingExchangeAck = false; // waiting for user to dismiss exercise change overlay
 
 // ═══════════════════════════════════════════════
 //  INIT
@@ -978,12 +1162,10 @@ document.addEventListener('DOMContentLoaded', () => {
   renderSaved();
   refreshNotifBar();
 
-  // Navigation
   document.querySelectorAll('.nav-tab').forEach(tab =>
     tab.addEventListener('click', () => goPage(tab.dataset.page))
   );
 
-  // Déverrouiller l'audio dès le premier contact
   document.addEventListener('touchstart', unlockAudio, { once: true, passive: true });
   document.addEventListener('click', unlockAudio, { once: true });
 
@@ -993,6 +1175,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-skip').addEventListener('click', skipSet);
   document.getElementById('btn-save').addEventListener('click', saveSession);
   document.getElementById('btn-overlay-done').addEventListener('click', resetAll);
+  document.getElementById('btn-exchange-go').addEventListener('click', dismissExchangeOverlay);
+
   document.getElementById('btn-enable-notif').addEventListener('click', async () => {
     const ok = await askNotifPerm();
     showToast(ok ? 'Notifications activées ✓' : 'Notifications refusées');
@@ -1019,30 +1203,38 @@ document.addEventListener('DOMContentLoaded', () => {
     sessionName = e.target.value
   );
 
-  // ── Resync si l'utilisateur revient sur la page ──
-  // (important sur iOS où tous les JS s'arrêtent en background)
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden && timerPhase === 'rest') {
       const rem = getRemaining();
-      if (rem <= 0) {
-        handleTimerEnd();
-      } else {
-        renderTimerDisplay(rem);
-      }
+      if (rem <= 0) handleTimerEnd();
+      else renderTimerDisplay(rem);
     }
   });
 
-  // Service worker PWA
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js').catch(() => {});
   }
 });
 
 // ═══════════════════════════════════════════════
-//  EXERCISES SETUP
+//  EXERCISES SETUP — RENDER
 // ═══════════════════════════════════════════════
-function addExercise(name = '', sets = 4, weight = '') {
-  exercises.push({ id: Date.now() + Math.random(), name, sets, weight });
+function makeSelectHTML(options, selected, cls, name) {
+  const opts = options.map(v => `<option value="${v}" ${v == selected ? 'selected' : ''}>${v}</option>`).join('');
+  return `<select class="ex-select ${cls}" data-field="${name}">${opts}</select>`;
+}
+
+function addExercise(name = '', sets = 4, weight = '', rpe = '', restMin = null, restSec = 0, customName = '') {
+  exercises.push({
+    id: Date.now() + Math.random(),
+    name: name || 'Squat',
+    customName: customName || '',
+    sets,
+    weight,
+    rpe: rpe || '',
+    restMin: restMin !== null ? restMin : null,   // null = use global
+    restSec: restSec || 0
+  });
   renderExercises();
 }
 
@@ -1054,46 +1246,167 @@ function removeExercise(id) {
 function renderExercises() {
   const list = document.getElementById('exercise-list');
   list.innerHTML = '';
+
   exercises.forEach(ex => {
     const div = document.createElement('div');
     div.className = 'exercise-entry';
+    div.dataset.id = ex.id;
+
+    const isCustom = ex.name === 'Autre…';
+    const currentRestMin = ex.restMin !== null ? ex.restMin : '';
+    const currentRestSec = ex.restSec || 0;
+
+    // Exercise preset options
+    const exOpts = EXERCISE_PRESETS.map(p =>
+      `<option value="${p}" ${p === ex.name ? 'selected' : ''}>${p}</option>`
+    ).join('');
+
+    // Sets options
+    const setsOpts = SETS_OPTIONS.map(v =>
+      `<option value="${v}" ${v == ex.sets ? 'selected' : ''}>${v} série${v > 1 ? 's' : ''}</option>`
+    ).join('');
+
+    // RPE options
+    const rpeOpts = `<option value="">-</option>` + RPE_OPTIONS.map(v =>
+      `<option value="${v}" ${v == ex.rpe ? 'selected' : ''}>@${v}</option>`
+    ).join('');
+
+    // Rest min options
+    const restMinOpts = `<option value="">Global</option>` + REST_MIN_OPTS.map(v =>
+      `<option value="${v}" ${v == currentRestMin ? 'selected' : ''}>${v}min</option>`
+    ).join('');
+
+    // Rest sec options
+    const restSecOpts = REST_SEC_OPTS.map(v =>
+      `<option value="${v}" ${v == currentRestSec ? 'selected' : ''}>${v}s</option>`
+    ).join('');
+
     div.innerHTML = `
-      <div class="ex-fields">
-        <div class="ex-row">
-          <input class="ex-input name" placeholder="Squat, Bench, Deadlift…"
-                 value="${ex.name}" data-id="${ex.id}" data-field="name" />
-          <input class="ex-input sets" type="number" placeholder="4" min="1" max="20"
-                 value="${ex.sets}" data-id="${ex.id}" data-field="sets" />
-          <input class="ex-input weight" type="number" placeholder="kg" min="0" step="0.5"
-                 value="${ex.weight}" data-id="${ex.id}" data-field="weight" />
+      <div class="ex-line1">
+        <div class="ex-select-wrap full">
+          <select class="ex-select" data-field="name">
+            ${exOpts}
+          </select>
+        </div>
+        <input class="ex-input-custom${isCustom ? ' show' : ''}" 
+               placeholder="Nom de l'exercice…" 
+               value="${ex.customName || ''}"
+               data-field="customName" />
+        <button class="btn-remove" data-id="${ex.id}">×</button>
+      </div>
+      <div class="ex-line2">
+        <div class="ex-col sets">
+          <span class="ex-col-label">Séries</span>
+          <div class="ex-select-wrap">
+            <select class="ex-select" data-field="sets">${setsOpts}</select>
+          </div>
+        </div>
+        <div class="ex-col weight">
+          <span class="ex-col-label">Poids (kg)</span>
+          <input class="ex-input-weight" type="number" placeholder="kg" 
+                 min="0" step="0.5" value="${ex.weight}" data-field="weight" />
+        </div>
+        <div class="ex-col rpe">
+          <span class="ex-col-label">RPE</span>
+          <div class="ex-select-wrap">
+            <select class="ex-select" data-field="rpe">${rpeOpts}</select>
+          </div>
+        </div>
+        <div class="ex-col rest-min">
+          <span class="ex-col-label">Repos</span>
+          <div class="ex-select-wrap">
+            <select class="ex-select" data-field="restMin">${restMinOpts}</select>
+          </div>
+        </div>
+        <div class="rest-sep">:</div>
+        <div class="ex-col rest-sec">
+          <span class="ex-col-label">+ sec</span>
+          <div class="ex-select-wrap">
+            <select class="ex-select" data-field="restSec">${restSecOpts}</select>
+          </div>
         </div>
       </div>
-      <button class="btn-remove" data-id="${ex.id}">×</button>
     `;
+
     list.appendChild(div);
   });
 
-  list.querySelectorAll('.ex-input').forEach(input =>
-    input.addEventListener('input', e => {
-      const ex = exercises.find(x => x.id === parseFloat(e.target.dataset.id));
-      if (!ex) return;
-      const field = e.target.dataset.field;
-      ex[field] = field === 'sets'
-        ? Math.max(1, parseInt(e.target.value) || 1)
-        : e.target.value;
-    })
-  );
+  // Event delegation
+  list.querySelectorAll('.exercise-entry').forEach(entry => {
+    const id = parseFloat(entry.dataset.id);
+    const ex = exercises.find(x => x.id === id);
+    if (!ex) return;
 
-  list.querySelectorAll('.btn-remove').forEach(btn =>
-    btn.addEventListener('click', e => removeExercise(parseFloat(e.target.dataset.id)))
-  );
+    // All selects
+    entry.querySelectorAll('select').forEach(sel => {
+      sel.addEventListener('change', e => {
+        const field = e.target.dataset.field;
+        const val = e.target.value;
+        if (field === 'name') {
+          ex.name = val;
+          const customInput = entry.querySelector('.ex-input-custom');
+          if (val === 'Autre…') {
+            customInput.classList.add('show');
+            customInput.focus();
+          } else {
+            customInput.classList.remove('show');
+            ex.customName = '';
+          }
+        } else if (field === 'sets') {
+          ex.sets = parseInt(val);
+        } else if (field === 'rpe') {
+          ex.rpe = val;
+        } else if (field === 'restMin') {
+          ex.restMin = val === '' ? null : parseInt(val);
+        } else if (field === 'restSec') {
+          ex.restSec = parseInt(val);
+        }
+      });
+    });
+
+    // Custom name input
+    const customInput = entry.querySelector('.ex-input-custom');
+    if (customInput) {
+      customInput.addEventListener('input', e => { ex.customName = e.target.value; });
+    }
+
+    // Weight input
+    const weightInput = entry.querySelector('.ex-input-weight');
+    if (weightInput) {
+      weightInput.addEventListener('input', e => { ex.weight = e.target.value; });
+    }
+
+    // Remove button
+    const removeBtn = entry.querySelector('.btn-remove');
+    if (removeBtn) {
+      removeBtn.addEventListener('click', () => removeExercise(id));
+    }
+  });
+}
+
+// ═══════════════════════════════════════════════
+//  HELPERS — nom effectif d'un exercice
+// ═══════════════════════════════════════════════
+function getExName(ex) {
+  if (ex.name === 'Autre…') return (ex.customName || '').trim() || 'Exercice';
+  return ex.name;
+}
+
+// ═══════════════════════════════════════════════
+//  GET REST SECONDS FOR AN EXERCISE
+// ═══════════════════════════════════════════════
+function getRestForEx(ex) {
+  if (ex.restMin !== null && ex.restMin !== undefined) {
+    return ex.restMin * 60 + (ex.restSec || 0);
+  }
+  return restSeconds; // global fallback
 }
 
 // ═══════════════════════════════════════════════
 //  START SESSION
 // ═══════════════════════════════════════════════
 function startSession() {
-  const valid = exercises.filter(e => e.name.trim());
+  const valid = exercises.filter(e => getExName(e).trim());
   if (!valid.length) { showToast('Ajoute au moins un exercice !'); return; }
 
   flatSeries = [];
@@ -1101,8 +1414,13 @@ function startSession() {
     const s = Math.max(1, parseInt(ex.sets) || 1);
     for (let i = 0; i < s; i++) {
       flatSeries.push({
-        exIndex: exIdx, setIndex: i,
-        name: ex.name.trim(), weight: ex.weight, totalSets: s
+        exIndex:   exIdx,
+        setIndex:  i,
+        name:      getExName(ex),
+        weight:    ex.weight,
+        rpe:       ex.rpe,
+        restSec:   getRestForEx(ex),
+        totalSets: s
       });
     }
   });
@@ -1111,6 +1429,7 @@ function startSession() {
   sessionActive = true;
   timerPhase    = 'idle';
   lastShownSec  = -1;
+  pendingExchangeAck = false;
 
   document.getElementById('session-running-title').textContent =
     sessionName.trim() || 'SÉANCE EN COURS';
@@ -1123,7 +1442,7 @@ function startSession() {
 //  TIMER
 // ═══════════════════════════════════════════════
 function handleAction() {
-  if (!sessionActive) return;
+  if (!sessionActive || pendingExchangeAck) return;
   if (timerPhase === 'idle') {
     validateSet();
   } else {
@@ -1135,6 +1454,7 @@ function handleAction() {
 
 function validateSet() {
   if (currentIdx >= flatSeries.length) return;
+  const justDone = flatSeries[currentIdx];
   playSetDoneSound();
   vibrate([80, 40, 80]);
   currentIdx++;
@@ -1146,14 +1466,28 @@ function validateSet() {
     return;
   }
 
+  const next = flatSeries[currentIdx];
+
+  // Vérifier si on change d'exercice
+  if (next.exIndex !== justDone.exIndex) {
+    stopWorker();
+    timerPhase = 'idle';
+    showExchangeOverlay(justDone.name, next);
+    return;
+  }
+
   // Lancer le repos
+  startRest(justDone.restSec);
+}
+
+function startRest(sec) {
   timerPhase   = 'rest';
-  timerTotal   = restSeconds;
-  timerEndTime = Date.now() + restSeconds * 1000;
-  lastShownSec = restSeconds;
+  timerTotal   = sec;
+  timerEndTime = Date.now() + sec * 1000;
+  lastShownSec = sec;
 
   document.getElementById('timer-block').classList.add('running');
-  renderTimerDisplay(restSeconds);
+  renderTimerDisplay(sec);
 
   if (worker) {
     worker.postMessage('start');
@@ -1165,7 +1499,7 @@ function validateSet() {
 }
 
 function skipSet() {
-  if (!sessionActive) return;
+  if (!sessionActive || pendingExchangeAck) return;
   if (timerPhase === 'rest') {
     stopWorker();
     timerPhase = 'idle';
@@ -1187,6 +1521,7 @@ function onTick() {
   if (rem !== lastShownSec) {
     lastShownSec = rem;
     renderTimerDisplay(rem);
+    if (rem <= 10 && rem > 0) playTickSound();
   }
 
   if (rem <= 0) handleTimerEnd();
@@ -1211,9 +1546,36 @@ function stopWorker() {
 }
 
 // ═══════════════════════════════════════════════
+//  EXERCISE CHANGE OVERLAY
+// ═══════════════════════════════════════════════
+function showExchangeOverlay(fromName, next) {
+  pendingExchangeAck = true;
+
+  document.getElementById('exch-from-name').textContent = fromName.toUpperCase();
+  document.getElementById('exch-to-name').textContent   = next.name.toUpperCase();
+
+  let info = `${next.totalSets} série${next.totalSets > 1 ? 's' : ''}`;
+  if (next.weight) info += ` · ${next.weight} kg`;
+  if (next.rpe)    info += ` · RPE ${next.rpe}`;
+  const restMin = Math.floor(next.restSec / 60);
+  const restS   = next.restSec % 60;
+  info += ` · Repos ${restMin}:${restS.toString().padStart(2,'0')}`;
+  document.getElementById('exch-to-info').textContent = info;
+
+  document.getElementById('overlay-exchange').classList.add('show');
+  vibrate([100, 60, 100, 60, 200]);
+}
+
+function dismissExchangeOverlay() {
+  document.getElementById('overlay-exchange').classList.remove('show');
+  pendingExchangeAck = false;
+  updateUI();
+}
+
+// ═══════════════════════════════════════════════
 //  RENDER
 // ═══════════════════════════════════════════════
-const CIRC = 471; // 2π × 75
+const CIRC = 471;
 
 function renderTimerDisplay(sec) {
   const m   = Math.floor(sec / 60);
@@ -1227,7 +1589,6 @@ function renderTimerDisplay(sec) {
   if (sec <= 5 && sec > 0) el.classList.add('blink');
   else                      el.classList.remove('blink');
 
-  // Arc : plein au départ, se vide en descendant
   const frac   = timerTotal > 0 ? sec / timerTotal : 0;
   const offset = CIRC - CIRC * frac;
   cir.style.strokeDashoffset = offset;
@@ -1256,7 +1617,10 @@ function updateUI() {
   if (timerPhase === 'rest') {
     status.textContent  = 'REPOS EN COURS';
     exName.textContent  = cur.name;
-    setInfo.textContent = `Prochaine : série ${cur.setIndex + 1}/${cur.totalSets}${cur.weight ? ' · ' + cur.weight + ' kg' : ''}`;
+    let nextInfo = `Prochaine : série ${cur.setIndex + 1}/${cur.totalSets}`;
+    if (cur.weight) nextInfo += ` · ${cur.weight} kg`;
+    if (cur.rpe)    nextInfo += ` · RPE ${cur.rpe}`;
+    setInfo.textContent = nextInfo;
     btnMain.textContent = 'PASSER LE REPOS';
     btnMain.className   = 'btn-main skip-rest';
     btnMain.disabled    = false;
@@ -1267,7 +1631,10 @@ function updateUI() {
     circle.style.strokeDashoffset = CIRC;
     circle.classList.remove('warning');
     exName.textContent  = cur.name;
-    setInfo.textContent = `Série ${cur.setIndex + 1} / ${cur.totalSets}${cur.weight ? ' · ' + cur.weight + ' kg' : ''}`;
+    let curInfo = `Série ${cur.setIndex + 1} / ${cur.totalSets}`;
+    if (cur.weight) curInfo += ` · ${cur.weight} kg`;
+    if (cur.rpe)    curInfo += ` · RPE ${cur.rpe}`;
+    setInfo.textContent = curInfo;
     btnMain.textContent = 'SÉRIE TERMINÉE ✓';
     btnMain.className   = 'btn-main';
     btnMain.disabled    = false;
@@ -1289,7 +1656,7 @@ function renderExList() {
   const groups = new Map();
   flatSeries.forEach((s, idx) => {
     const key = `${s.exIndex}`;
-    if (!groups.has(key)) groups.set(key, { name: s.name, weight: s.weight, total: s.totalSets, indices: [] });
+    if (!groups.has(key)) groups.set(key, { name: s.name, weight: s.weight, rpe: s.rpe, total: s.totalSets, indices: [] });
     groups.get(key).indices.push(idx);
   });
 
@@ -1312,9 +1679,13 @@ function renderExList() {
       return `<div class="set-dot ${d ? 'done' : c ? 'current' : ''}">${d ? '✓' : li + 1}</div>`;
     }).join('');
 
+    let meta = '';
+    if (g.weight) meta += `${g.weight} kg`;
+    if (g.rpe)    meta += (meta ? ' · ' : '') + `RPE ${g.rpe}`;
+
     card.innerHTML = `
       <div class="ex-card-name">${g.name} ${badge}</div>
-      ${g.weight ? `<div class="ex-weight-tag">${g.weight} kg</div>` : ''}
+      ${meta ? `<div class="ex-weight-tag">${meta}</div>` : ''}
       <div class="sets-grid">${dots}</div>
     `;
     container.appendChild(card);
@@ -1327,13 +1698,16 @@ function renderExList() {
 const STORE_KEY = 'defcon_sessions';
 
 function saveSession() {
-  const valid = exercises.filter(e => e.name.trim());
+  const valid = exercises.filter(e => getExName(e).trim());
   if (!valid.length) { showToast('Rien à sauvegarder !'); return; }
   const name = sessionName.trim() || 'Séance ' + new Date().toLocaleDateString('fr-FR');
   const all  = getStored();
   all.push({
     id: Date.now(), name, restSeconds,
-    exercises: valid.map(e => ({ name: e.name, sets: e.sets, weight: e.weight })),
+    exercises: valid.map(e => ({
+      name: e.name, customName: e.customName, sets: e.sets,
+      weight: e.weight, rpe: e.rpe, restMin: e.restMin, restSec: e.restSec
+    })),
     savedAt: new Date().toISOString()
   });
   localStorage.setItem(STORE_KEY, JSON.stringify(all));
@@ -1387,7 +1761,13 @@ function renderSaved() {
 function loadSession(id) {
   const s = getStored().find(x => x.id === id);
   if (!s) return;
-  exercises   = s.exercises.map((e, i) => ({ ...e, id: Date.now() + i }));
+  exercises   = s.exercises.map((e, i) => ({
+    ...e, id: Date.now() + i,
+    customName: e.customName || '',
+    rpe: e.rpe || '',
+    restMin: e.restMin !== undefined ? e.restMin : null,
+    restSec: e.restSec || 0
+  }));
   restSeconds = s.restSeconds;
   sessionName = s.name;
   document.getElementById('session-name').value = s.name;
@@ -1422,7 +1802,9 @@ function showCompleted() {
 
 function resetAll() {
   document.getElementById('overlay-done').classList.remove('show');
-  sessionActive = false;
+  document.getElementById('overlay-exchange').classList.remove('show');
+  sessionActive      = false;
+  pendingExchangeAck = false;
   stopWorker();
   timerPhase   = 'idle';
   currentIdx   = 0;
@@ -1430,16 +1812,16 @@ function resetAll() {
   timerEndTime = null;
   lastShownSec = -1;
 
-  document.getElementById('timer-status').textContent   = 'PRÊT';
-  document.getElementById('timer-display').textContent  = '—';
-  document.getElementById('timer-display').className    = 'timer-display';
+  document.getElementById('timer-status').textContent    = 'PRÊT';
+  document.getElementById('timer-display').textContent   = '—';
+  document.getElementById('timer-display').className     = 'timer-display';
   document.getElementById('current-ex-name').textContent = '—';
-  document.getElementById('current-set-info').textContent = 'Appuie sur DÉMARRER pour commencer';
-  document.getElementById('btn-timer-action').textContent = 'DÉMARRER';
-  document.getElementById('btn-timer-action').disabled  = false;
-  document.getElementById('btn-timer-action').className = 'btn-main';
-  document.getElementById('session-progress').style.width = '0%';
-  document.getElementById('session-ex-list').innerHTML  = '';
+  document.getElementById('current-set-info').textContent= 'Appuie sur DÉMARRER pour commencer';
+  document.getElementById('btn-timer-action').textContent= 'DÉMARRER';
+  document.getElementById('btn-timer-action').disabled   = false;
+  document.getElementById('btn-timer-action').className  = 'btn-main';
+  document.getElementById('session-progress').style.width= '0%';
+  document.getElementById('session-ex-list').innerHTML   = '';
   document.getElementById('timer-circle').style.strokeDashoffset = CIRC;
 
   goPage('setup');
