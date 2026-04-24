@@ -895,21 +895,14 @@ function playTone(freq, t0, dur, vol = 0.5, type = 'sine') {
   } catch(e) {}
 }
 
-// 3 bips montants — repos terminé
+// Alarme de fin — 4 paires haute/basse ≈ 2.4 secondes
 function playEndSound() {
   try {
     const t = getCtx().currentTime;
-    playTone(440, t,        0.18, 0.55);
-    playTone(660, t + 0.22, 0.18, 0.55);
-    playTone(880, t + 0.44, 0.36, 0.65);
-  } catch(e) {}
-}
-
-// Bip tick — compte à rebours final
-function playTickSound() {
-  try {
-    const t = getCtx().currentTime;
-    playTone(660, t, 0.07, 0.22, 'square');
+    for (let i = 0; i < 4; i++) {
+      playTone(1050, t + i * 0.55,        0.22, 0.75, 'square');
+      playTone(700,  t + i * 0.55 + 0.25, 0.22, 0.55, 'square');
+    }
   } catch(e) {}
 }
 
@@ -934,14 +927,21 @@ async function askNotifPerm() {
 
 function pushNotif(title, body) {
   if (!('Notification' in window) || Notification.permission !== 'granted') return;
-  try {
-    new Notification(title, {
-      body,
-      tag: 'defcon',
-      renotify: true,
-      silent: false
-    });
-  } catch(e) {}
+  // registration.showNotification() fonctionne même quand l'onglet est en arrière-plan
+  // contrairement à new Notification() qui nécessite que la page soit active
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.ready
+      .then(reg => reg.showNotification(title, {
+        body,
+        tag: 'defcon-timer',
+        renotify: true,
+        requireInteraction: true,   // reste visible jusqu'au tap
+        vibrate: [200, 100, 200, 100, 400]
+      }))
+      .catch(() => { try { new Notification(title, { body }); } catch(e) {} });
+  } else {
+    try { new Notification(title, { body }); } catch(e) {}
+  }
 }
 
 function refreshNotifBar() {
@@ -1187,9 +1187,6 @@ function onTick() {
   if (rem !== lastShownSec) {
     lastShownSec = rem;
     renderTimerDisplay(rem);
-
-    // Bips de décompte : 10..1
-    if (rem <= 10 && rem > 0) playTickSound();
   }
 
   if (rem <= 0) handleTimerEnd();
